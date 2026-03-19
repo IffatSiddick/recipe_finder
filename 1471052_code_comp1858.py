@@ -142,6 +142,11 @@ print("")
 
 ingredients = []
 
+# this takes the from recipesDict the values of the values of its keys
+# eg: {recipe 1: {world_region: Africa, ingredient 1: cumin, ...}}
+# becomes {world_region: Africa, ingredients 1: cumin, ... }
+# becomes Africa, cumin, ...
+
 for recipe in recipesDict.values():
     recipe_ing = []
     for parts in recipe.values():
@@ -162,7 +167,7 @@ and doesnt overwhelm the user by presenting thousands of recipes
 
 ingredient_match = []
 
-match_limit = len(user_ingredients)//2
+match_limit = round(len(user_ingredients)//2)
 print("The minimum number of matching ingredients a recipe must contain is " + str(match_limit) + ".\n")
 
 for recipe in ingredients:
@@ -178,7 +183,7 @@ for recipe in ingredients:
 ingredient_match.sort(key = lambda x: x[1], reverse=True)
 
 print("These are your recipes that contain at least half the ingredients you want to use:")
-print(ingredient_match)
+print(ingredient_match[0])
 
 print("These are the total number of recipes found:")
 print(len(ingredient_match))
@@ -189,13 +194,12 @@ print("")
 
 print("TASK 1.4: finding the recipe ingredient_match\n") 
 
-# from selected recipes takes only thie ingredients
+# from selected recipes takes only the ingredients
 if (len(ingredient_match) > 0):
     recipe_ingredients = [] 
 
     for recipe in ingredient_match:
-        input = recipe[0]
-        input.pop(0)
+        input = recipe[0][1:] 
         recipe_ingredients.append(input)
 
     # take user ingredients and find all combinations
@@ -222,16 +226,12 @@ if (len(ingredient_match) > 0):
                 
     scores.sort(key = lambda x: x[1], reverse=True)
 
-    # print(scores)
-
     best_recipe = scores[0][0]
 
     print("This is the recipe with the highest flavour score.")
     print(ingredient_match[best_recipe]) 
-    print("It has total flavour score of " + str(scores[0][1]))
+    print("It has total flavour score of " + str(scores[0][1]) + ".")
     print("It contains " + str(ingredient_match[best_recipe][1]) + " ingredients from the ingredients you requested.")
 
 else:
-    print("As there are no recipies with at least a 50% match I cannot find you the recipe with the best flavour score.")
-
-
+    print("As there are no recipies with at least a reasonable match I cannot find you the recipe with the best flavour score.")
