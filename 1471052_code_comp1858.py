@@ -117,7 +117,10 @@ print("")
 # this allows enough recipes for the algorithms to be tested while not becoming confusing to read
 # ['chicken', 'black pepper', 'sesame oil', 'olive oil', 'rice', 'green tea', 'butter', 'flour', 'eggs', 'cinnamon', 'sugar', 'honey'] => 4
 
-print("TASK 1.3: finding the best matching recipe in worldregions_ingredients\n") 
+import time
+start = time.process_time()
+
+print("TASK 1.3: finding the matching recipes in worldregions_ingredients\n") 
 
 user_ingredients = []
 cont = True
@@ -180,16 +183,21 @@ for recipe in ingredients:
     if (match_count >= match_limit):
         ingredient_match.append([recipe, match_count])
 
-ingredient_match.sort(key = lambda x: x[1], reverse=True)
+if (len(ingredient_match) > 0):
+    ingredient_match.sort(key = lambda x: x[1], reverse=True)
 
-print("These are your recipes that contain at least half the ingredients you want to use:")
-print(ingredient_match[0])
+    print("These are your recipes that contain at least half the ingredients you want to use:")
+    print(ingredient_match)
 
-print("These are the total number of recipes found:")
-print(len(ingredient_match))
+    print("These are the total number of recipes found:")
+    print(len(ingredient_match))
+else:
+    print("There were no reasonably matching recipes to be found.")
+
+end = time.process_time()
+print(end - start, "seconds")
 
 print("")
-
 # TASK 1.4
 
 print("TASK 1.4: finding the recipe ingredient_match\n") 
@@ -234,4 +242,4 @@ if (len(ingredient_match) > 0):
     print("It contains " + str(ingredient_match[best_recipe][1]) + " ingredients from the ingredients you requested.")
 
 else:
-    print("As there are no recipies with at least a reasonable match I cannot find you the recipe with the best flavour score.")
+    print("As there are no recipes with at least a reasonable match the recipe with the best flavour score cannot be found.")
